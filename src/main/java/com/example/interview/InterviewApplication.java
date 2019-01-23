@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.example.interview.Interview.CreateRadioProfileRequest;
 import com.example.interview.Interview.DeleteRadioProfileRequest;
+import com.example.interview.Interview.GetRadioLocationRequest;
 import com.example.interview.Interview.SetRadioLocationRequest;
 
 import org.springframework.boot.SpringApplication;
@@ -31,14 +32,15 @@ public class InterviewApplication {
         return new ProtobufHttpMessageConverter();
     }
 
-
     @Bean
     public RadioProfileRepository createTestProfiles() {
         Map<Integer, CreateRadioProfileRequest> createRadioProfilesRequest = new HashMap<>();
-       
+
         Map<Integer, SetRadioLocationRequest> setRadioLocationRequest = new HashMap<>();
 
         Map<Integer, DeleteRadioProfileRequest> deleteRadioProfilesRequest = new HashMap<>();
+
+        Map<Integer, GetRadioLocationRequest> getRadioLocationRequest = new HashMap<>();
 
         CreateRadioProfileRequest createRadioProfileRequest1 = CreateRadioProfileRequest.newBuilder().setId(100)
                 .setAlias("Radio100").addAllowedLocations("CPH-1, CPH-2").build();
@@ -60,23 +62,29 @@ public class InterviewApplication {
 
             @Override
             public DeleteRadioProfileRequest deleteProfile(int id) {
+
                 return deleteRadioProfilesRequest.get(id);
             }
 
             @Override
             public SetRadioLocationRequest setLocationById(int id) {
-               
 
-                    SetRadioLocationRequest setRadioLocationRequest1 = SetRadioLocationRequest.newBuilder().setRadioId(100).setLocation("CPH-1").build();
-                    SetRadioLocationRequest setRadioLocationRequest2 = SetRadioLocationRequest.newBuilder().setRadioId(101).setLocation("CPH-3").build();
-            
-                    setRadioLocationRequest.put((int) setRadioLocationRequest1.getRadioId(), setRadioLocationRequest1);
-                    setRadioLocationRequest.put((int) setRadioLocationRequest2.getRadioId(), setRadioLocationRequest2);
-            
-                  return  setRadioLocationRequest.get(id);
+                SetRadioLocationRequest setRadioLocationRequest1 = SetRadioLocationRequest.newBuilder().setRadioId(100)
+                        .setLocation("CPH-1").build();
+                SetRadioLocationRequest setRadioLocationRequest2 = SetRadioLocationRequest.newBuilder().setRadioId(101)
+                        .setLocation("CPH-3").build();
+
+                setRadioLocationRequest.put((int) setRadioLocationRequest1.getRadioId(), setRadioLocationRequest1);
+                setRadioLocationRequest.put((int) setRadioLocationRequest2.getRadioId(), setRadioLocationRequest2);
+
+                return setRadioLocationRequest.get(id);
+            }
+
+            @Override
+            public GetRadioLocationRequest getRadioLocation(int id) {
+                return getRadioLocationRequest.get(id);
             }
         };
     }
 
 }
-

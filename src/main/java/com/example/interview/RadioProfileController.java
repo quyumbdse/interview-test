@@ -19,23 +19,21 @@ public class RadioProfileController {
     @Autowired
     RadioProfileRepository radioProfileRepo;
 
-
-
     @RequestMapping(value = "/profiles/{id}")
     ResponseEntity<CreateRadioProfileRequest> getRadioProfile(@PathVariable Integer id) {
         return ResponseEntity.ok(radioProfileRepo.findById(id));
-      
+
     }
 
-    @RequestMapping(value = "/profiles/{id}",  method = RequestMethod.DELETE)
+    @RequestMapping(value = "/profiles/{id}", method = RequestMethod.DELETE)
     ResponseEntity<?> deleteRadioProfile(@PathVariable Integer id) {
         return ResponseEntity.ok(radioProfileRepo.deleteProfile(id));
-      
+
     }
 
-    @RequestMapping(value = "/profiles/{id}",  method = RequestMethod.PUT)
+    @RequestMapping(value = "/profiles/location/{id}", method = RequestMethod.PUT)
     ResponseEntity<?> setRadioLocation(@PathVariable Integer id) {
         return ResponseEntity.ok(radioProfileRepo.setLocationById(id));
-      
+
     }
 }
